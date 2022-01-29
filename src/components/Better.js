@@ -13,10 +13,10 @@ export default function Better() {
             setLoading(true)
             try {
                 const response = await axios.get('https://swapi.dev/api/planets')
-                setPlanets(Array.from(response.data.results))
-                handleSort(planets)
-                handlePopulation(planets)
-                handleSurfaceWater(planets)
+                setPlanets(response.data.results)
+                handleSort(response.data.results)
+                handlePopulation(response.data.results)
+                handleSurfaceWater(response.data.results)
             } catch (error) {
                 console.log(`ERROR: ${error.message}`);
                 setisError(true)
@@ -64,10 +64,9 @@ export default function Better() {
                 planets[i]['surface_water'] = (Math.round(r * sw))
                 }
             }
-            setNewPlanets(planets)
         }
-         
-    return (
+
+        return (
         <div className='=app-container'>
         <h1>{loading ? <p>loading...</p> : ""}</h1>
         <h1>{isError ? <p>Sorry, there was an error</p> : ""}</h1>
@@ -96,7 +95,7 @@ export default function Better() {
                 </tr>
             </thead>
             <tbody>
-            {newPlanets?.map(planet => ( 
+            {planets?.map(planet => ( 
                 <tr key={planet.name}>
                     <td > 
                         <a href={planet.url}  target="_blank">{planet.name}</a>
